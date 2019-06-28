@@ -1,26 +1,19 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 function App() {
-  const [progress, setProgress] = useState(0);
-  function minus() {
-    setProgress(progress - 1);
-  }
-  function plus() {
-    setProgress(progress + 1);
-  }
+  const [repos, setRepos] = useState([]);
+  useEffect(() => {
+    async function fetchData() {
+      const response = await axios.get("https://api.github.com/users/GLuchtenberg/repos");
+      setRepos(response.data);
+    }
+    fetchData();
+  }, [repos]);
   return (
     <div>
-      <div style={{ height: 15, width: 100, border: "1px solid black" }}>
-        <div
-          style={{
-            height: "100%",
-            width: `${(progress * 5) % 101}%`,
-            background: "blue"
-          }}
-        />
-      </div>
-      <button onClick={minus}>-</button>
-      <button onClick={plus}>+</button>
+      {repos.map(repo => (
+        <h1 key={repo.id}>{repo.name}</h1>
+      ))}
     </div>
   );
 }
