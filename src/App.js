@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
 function App() {
+  const [progress, setProgress] = useState(0);
+  function minus() {
+    setProgress(progress - 1);
+  }
+  function plus() {
+    setProgress(progress + 1);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div style={{ height: 15, width: 100, border: "1px solid black" }}>
+        <div
+          style={{
+            height: "100%",
+            width: `${(progress * 5) % 101}%`,
+            background: "blue"
+          }}
+        />
+      </div>
+      <button onClick={minus}>-</button>
+      <button onClick={plus}>+</button>
     </div>
   );
 }
